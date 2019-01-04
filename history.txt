@@ -1,0 +1,27 @@
+cd C:
+cd..
+cd myWorkspace
+cd test-tracker
+cd test_tracker
+express
+npm install
+SET DEBUG=test-tracker:* & npm start
+Y
+SET DEBUG=test-tracker:* & npm start
+Y
+SET DEBUG=test-tracker:* & npm start
+npm install -g mongodb
+SET DEBUG=test-tracker:* & npm start
+npm link mongodb 
+SET DEBUG=test-tracker:* & npm start
+ls
+dir
+SET DEBUG=test-tracker:* & npm start
+npm link monk
+SET DEBUG=test-tracker:* & npm start
+Y
+SET DEBUG=test-tracker:* & npm start
+Y
+SET DEBUG=test-tracker:* & npm start
+Y
+doskey /HISTORY > history.txt

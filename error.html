@@ -1,0 +1,23 @@
+<!-- copied from layout.jade-->
+<!--title is from index.js--><!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+  </head>
+  <body>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="/javascripts/global.js"></script>
+   <!-- ADDED THIS ONE LINE -->
+
+   <h3>Sorry, you've attempted to reach a page that can't be found.</h3>
+   <br><br>  
+<div class="row"> <!-- allows us to treat container as a row. Everything will be in a single row -->
+  <a href = "/" class="btn btn-primary">Home</a> <!-- Using the slash, on routes/index.js, defaults to home page -->
+  <a href = "/adduser" class="btn btn-danger">ADD TASK</a><!-- connected using index.js-->
+  <a href = "/userlist" class="btn btn-primary">TASK LIST</a>
+</div>
+
+
+  </body>
+</html>

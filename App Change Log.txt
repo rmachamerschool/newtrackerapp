@@ -1,0 +1,366 @@
+App Change Log
+___________________
+
+Before starting:
+	cmd: mongod
+	cmd: mongo
+	cmd: SET DEBUG=test-tracker:* & npm start
+	open browser window: http://localhost:3000/
+
+DB: db is 'test_tracker'; collection is 'userlist'
+	> use test_tracker
+	switched to db test_tracker
+	> db.userlist.find()
+
+
+---
+Edit to index.jade
+
+Previously, That h1= title line, and the paragraph after it, are both pulling a title variable that's set in /routes/index.js, and just says "Express".
+
+Was: 
+block content
+  h1= title
+  p Welcome to our test
+
+Now: 
+
+block content
+  h1= title
+  p Welcome to Mary's task-tracking app. There's not much to see here yet.
+
+------------------------------------
+
+Edit to routes/index.js
+
+Was:
+/* GET home page. */
+router.get('/', function(req, res, next) {
+  res.render('index', { title: 'Express' });
+});
+
+Now: \/* GET home page. */
+router.get('/', function(req, res, next) {
+  res.render('index', { title: 'Task-Tracker 1.0' });
+});
+
+-------------------------------
+In test_tracker db: (creating a new collection in test_tracker called 'tasks' and giving it some starting data)
+
+db.tasks.insert({"assignee":"Mary Crosson", "task":"clear out garage", "priority":"3", "dueDate":"None","dependencies":"none","completed":"n"})
+
+-------------------------------
+In users.js
+
+Changed six instances of userlist to tasks.
+
+UNDONE
+
+------------------------
+In global.js
+
+Changed incidentuserList to tasks
+
+UNDONE
+
+------------------------------
+
+In index.jade
+
+was:
+ // USER LIST
+    h2 User List
+    #userList
+      table
+        thead
+          th UserName
+          th Email
+          th Delete?
+        tbody
+    // /USER LIST
+
+now:
+
+ // USER LIST
+    h2 Task List
+    #userList
+      table
+        thead
+          th Assignee
+          th Task
+          th Delete?
+        tbody
+    // /USER LIST
+
+note #userList is defined here!!
+will need to change to #taskList
+
+------------------
+In index.jade
+
+was:
+
+ // USER INFO
+    #userInfo
+      h2 User Info
+      p
+        strong Name:
+        |  <span id='userInfoName'></span>
+        br
+        strong Age:
+        |  <span id='userInfoAge'></span>
+        br
+        strong Gender:
+        |  <span id='userInfoGender'></span>
+        br
+        strong Location:
+        |  <span id='userInfoLocation'></span>
+    // /USER INFO
+
+now 
+
+ // USER INFO
+    #userInfo
+      h2 Task Info
+      p
+        strong Completed:
+        |  <span id='userInfoName'></span>
+        br
+        strong Priority:
+        |  <span id='userInfoAge'></span>
+        br
+        strong Due Date:
+        |  <span id='userInfoGender'></span>
+        br
+        strong Dependencies:
+        |  <span id='userInfoLocation'></span>
+    // /USER INFO
+
+note: #userInfo location
+note location id's
+--------------------------------------
+In index.jade
+
+was:
+
+ h2 Add User
+    #addUser
+      fieldset
+        input#inputUserName(type='text', placeholder='Username')
+        input#inputUserEmail(type='text', placeholder='Email')
+        br
+        input#inputUserFullname(type='text', placeholder='Full Name')
+        input#inputUserAge(type='text', placeholder='Age')
+        br
+        input#inputUserLocation(type='text', placeholder='Location')
+        input#inputUserGender(type='text', placeholder='gender')
+        br
+        button#btnAddUser Add User
+    // /ADD USER
+
+now: 
+    // ADD USER
+    h2 Add Task
+    #addUser
+      fieldset
+        input#inputUserName(type='text', placeholder='Assignmee')
+        input#inputUserEmail(type='text', placeholder='Task')
+        br
+        input#inputUserFullname(type='text', placeholder='Completed?')
+        input#inputUserAge(type='text', placeholder='Priority')
+        br
+        input#inputUserLocation(type='text', placeholder='Dependencies')
+        input#inputUserGender(type='text', placeholder='Due Date')
+        br
+        button#btnAddUser Add Task
+    // /ADD USER
+
+Note #addUser location
+ The input-dadas have not had names changed.
+
+___________________________
+
+users.js
+
+/* GET userlist. */
+router.get('/userlist', function(req, res) {
+  var db = req.db;
+  var collection = db.get('userlist');
+  collection.find({},{},function(e,docs){
+    res.json(docs);
+  });
+});
+
+This is the function that gets the userlist data.
+
+----------------------------------
+
+users.js
+
+/* POST to adduser. */
+router.post('/adduser', function(req, res) {
+  var db = req.db;
+  var collection = db.get('userlist');
+  collection.insert(req.body, function(err, result){
+    res.send(
+      (err === null) ? { msg: '' } : { msg: err }
+    );
+  });
+});
+
+----------------------------------------------
+global.js
+
+var userListData = []; Is the array in the add user tool
+
+
+----------------------------
+global.js
+
+ // Populate the user table on initial page load
+  populateTable();
+
+
+
+----------------------------
+
+Change, in Mongo:
+
+db.userlist.renameCollection("tasklist")
+
+-----------------------------
+
+Change, in users.js
+
+Renamed all instances of userlist to tasklist.
+
+----------
+Change, in global.js
+
+Renamed one instance of userlist to tasklist
+
+----------------
+
+{ "_id" : ObjectId("5c23e42d3734e3693cbbc8fe"), "assignee_dbf" : "Lyndsey Magrone", "email_dbf" : "magronel@umkc.edu", "task_dbf" : "shave the dog", "priority" : 2, "dependencies_dbf" : "catch dog", "due_date_dbf" : "12/31" }
+
+-------------
+Updated field name from 'email' to 'task_dbf'
+db.tasklist.updateMany( {}, { $rename: { "email": "task_dbf" } } )
+
+--------
+Updated global.js from
+
+  
+      tableContent += '<td>' + this.email + '</td>';
+
+to 
+
+ 
+      tableContent += '<td>' + this.task_dbf + '</td>';
+
+----------------
+> db.tasklist.updateMany( {}, { $rename: { "username": "assignee_dbf" } } )
+
+-----------------------
+
+global.js
+
+     tableContent += '<td><a href="#" class="linkshowuser" rel="' + this.username + '">' + this.username + '</a></td>';
+
+to
+
+     tableContent += '<td><a href="#" class="linkshowuser" rel="' + this.assignee_dbf + '">' + this.assignee_dbf + '</a></td>';
+
+---
+global.js
+
+old:
+ var arrayPosition = userListData.map(function(arrayItem) { return arrayItem.username; }).indexOf(thisUserName);
+
+new:
+
+ var arrayPosition = userListData.map(function(arrayItem) { return arrayItem.assignee_dbf; }).indexOf(thisUserName);
+-------
+
+ //Populate Info Box
+  $('#userInfoName').text(thisUserObject.task_dbf);
+  $('#userInfoAge').text(thisUserObject.priority_dbf);
+  $('#userInfoGender').text(thisUserObject.dependencies_dbf);
+  $('#userInfoLocation').text(thisUserObject.due_date_dbf);
+
+new:
+
+
+  //Populate Info Box
+  $('#taskInfoTask').text(thisUserObject.task_dbf);
+  $('#taskInfoPriority').text(thisUserObject.priority_dbf);
+  $('#taskInfoDueDate').text(thisUserObject.due_date_dbf);
+  $('#taskInfoDependencies').text(thisUserObject.dependencies_dbf);
+
+      
+---
+> db.tasklist.updateMany( {}, { $rename: { "location": "dependencies_dbf" } } )
+----
+db.tasklist.updateMany( {}, { $rename: { "gender": "due_date_dbf" } } )
+----
+> db.tasklist.updateMany( {}, { $rename: { "age": "priority_dbf" } } )
+----
+ db.tasklist.updateMany( {}, { $rename: { "fullname": "completed_dbf" } } )
+---------
+old:
+ // TASK INFO
+    #userInfo
+      h2 Task Info
+      p
+        strong Completed?:
+        |  <span id='userInfoName'></span>
+        br
+        strong Priority:
+        |  <span id='userInfoAge'></span>
+        br
+        strong Due Date:
+        |  <span id='userInfoGender'></span>
+        br
+        strong Dependencies:
+        |  <span id='userInfoLocation'></span>
+    // /TASK INFO
+
+new
+ // TASK INFO
+    #userInfo
+      h2 Task Info
+      p
+        strong Completed?:
+        |  <span id='userInfoName'></span>
+        br
+        strong Priority:
+        |  <span id='userInfoAge'></span>
+        br
+        strong Due Date:
+        |  <span id='userInfoGender'></span>
+        br
+        strong Dependencies:
+        |  <span id='userInfoLocation'></span>
+    // /TASK INFO
+
+----
+ // If it is, compile all user info into one object
+      var newUser = {
+        'username': $('#addUser fieldset input#inputUserName').val(),
+        'email': $('#addUser fieldset input#inputUserEmail').val(),
+        'fullname': $('#addUser fieldset input#inputUserFullname').val(),
+        'age': $('#addUser fieldset input#inputUserAge').val(),
+        'location': $('#addUser fieldset input#inputUserLocation').val(),
+        'gender': $('#addUser fieldset input#inputUserGender').val()
+      }
+  
+new:
+
+  var newUser = {
+        'assignee_dbf': $('#addUser fieldset input#inputUserName').val(),
+        'task_dbf': $('#addUser fieldset input#inputUserEmail').val(),
+        'completed_dbf': $('#addUser fieldset input#inputUserFullname').val(),
+        'priority_dbf': $('#addUser fieldset input#inputUserAge').val(),
+        'dependencies_dbf': $('#addUser fieldset input#inputUserLocation').val(),
+        'due_date_dbf': $('#addUser fieldset input#inputUserGender').val()
+      }

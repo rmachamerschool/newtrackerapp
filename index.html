@@ -1,0 +1,59 @@
+
+
+<!--title is from index.js-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Task-Tracker 1.1</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+  </head>
+  <body>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="/javascripts/global.js"></script>
+    
+<!-- This sets up the outline of the page -- the title and the three tables.-->
+<!--extends layout-->
+<h1>Task-Tracker 1.1</h1>
+<p>Welcome to Mary's task-tracking app. There's not much to see here</p>
+
+
+
+<div class="row"> <!-- allows us to treat container as a row. Everything will be in a single row -->
+  <a href = "/" class="btn btn-primary">Home</a> <!-- Using the slash, on routes/index.js, defaults to home page -->
+  <a href = "/adduser" class="btn btn-danger">ADD TASK</a><!-- connected using index.js-->
+  <a href = "/userlist" class="btn btn-primary">TASK LIST</a>
+</div>
+
+
+
+<!-- Wrapper-->
+<div id="wrapper">
+  <!-- TASK INFO-->
+  <div id="userInfo">
+    <h2>Task Info</h2>
+    <p><strong>Task Name:</strong> <span id='taskInfoTask'></span><br><strong>Priority:</strong> <span id='taskInfoPriority'></span><br><strong>Due Date:</strong> <span id='taskInfoDueDate'></span><br><strong>Dependencies:</strong> <span id='taskInfoDependencies'></span></p>
+  </div>
+  <!-- /TASK INFO-->
+
+
+  <!-- TASK LIST-->
+  <h2>Task List</h2>
+  <div id="userList">
+    <table>
+      <thead>
+        <th>Assignee</th>
+        <th>Task</th>
+        <th>Delete?</th>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+  <!-- /TASK LIST-->
+
+  
+</div>
+
+
+<!-- /WRAPPER-->
+  </body>
+</html>

@@ -1,0 +1,56 @@
+// This sets up the outline of the page -- the title and the three tables.
+
+extends layout
+
+block content
+  h1= title
+  p Welcome to Mary's task-tracking app. There's not much to see here
+
+  // Wrapper
+  #wrapper
+
+    // TASK INFO
+    #userInfo
+      h2 Task Info
+      p
+        strong Task Name:
+        |  <span id='taskInfoTask'></span>
+        br
+        strong Priority:
+        |  <span id='taskInfoPriority'></span>
+        br
+        strong Due Date:
+        |  <span id='taskInfoDueDate'></span>
+        br
+        strong Dependencies:
+        |  <span id='taskInfoDependencies'></span>
+    // /TASK INFO
+
+    // TASK LIST
+    h2 Task List
+    #userList
+      table
+        thead
+          th Assignee
+          th Task
+          th Delete?
+        tbody
+    // /TASK LIST
+
+    // ADD TASK
+    h2 Add Task
+    #addUser
+      fieldset
+        input#inputUserName(type='text', placeholder='Assignee')
+        input#inputUserEmail(type='text', placeholder='Task')
+        br
+        input#inputUserFullname(type='text', placeholder='Completed?')
+        input#inputUserAge(type='text', placeholder='Priority')
+        br
+        input#inputUserLocation(type='text', placeholder='Dependencies')
+        input#inputUserGender(type='text', placeholder='Due Date')
+        br
+        button#btnAddUser Add Task
+    // /ADD TASK
+
+  // /WRAPPER

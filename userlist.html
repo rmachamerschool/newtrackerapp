@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Task-Tracker 1.1</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+  </head>
+  <body>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="/javascripts/global.js"></script>
+ 
+
+ <!-- TASK INFO-->
+ <div id="userInfo">
+    <h2>Task Info</h2>
+    <p><strong>Task Name:</strong> <span id='taskInfoTask'></span><br><strong>Priority:</strong> <span id='taskInfoPriority'></span><br><strong>Due Date:</strong> <span id='taskInfoDueDate'></span><br><strong>Dependencies:</strong> <span id='taskInfoDependencies'></span></p>
+  </div>
+  <!-- /TASK INFO-->
+<br><br><br><br><br><br><br><br>
+
+  <!-- TASK LIST-->
+  <h2>Task List</h2>
+  <div id="userList">
+    <table>
+      <thead>
+        <th>Assignee</th>
+        <th>Task</th>
+        <th>Delete?</th>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+  <!-- /TASK LIST-->
+  
+  <div>
+    <a href = "/" class="btn btn-primary">Home</a> 
+    <button class="btn btn-warning" onclick="myFunction()">Console Love </button>
+</div>
+
+</body>
+</html>
