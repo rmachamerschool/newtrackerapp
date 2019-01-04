@@ -27,7 +27,7 @@ Now:
 
 block content
   h1= title
-  p Welcome to Mary's task-tracking app. There's not much to see here yet.
+  p Welcome to Rebecca's task-tracking app. There's not much to see here yet.
 
 ------------------------------------
 

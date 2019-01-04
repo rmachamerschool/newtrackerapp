@@ -2,6 +2,10 @@ myButtonSide {
   margin: 10%
 }
 
+.myPic {
+max-height: 20%;
+max-width: 20%;
+}
 
 
 body {
